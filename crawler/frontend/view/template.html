@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:ntd-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+
+<body>
+
+<div>
+  <div align="middle">
+    <form method="get">
+      <input type="text" maxlengtd="100" style="width: 500px" value="{{.Query}}" name="q"/>
+      <button type="submit">搜索</button>
+    </form>
+    
+  </div>
+  <h2>共为你找到相关结果为{{.Hits}}个。显示从{{.Start}}起共{{len .Items}}个</h2>
+</div>
+
+<table>
+  <tbody>
+    {{range .Items}}
+    <tr>
+      <td><a href="{{.Url}}">{{.Payload.Name}}</a></td>
+      {{with .Payload}}
+      <td>{{.Gender}}</td>
+      <td>{{.Age}}</td>
+      <td>{{.Height}}cm</td>
+      <td>{{.Weight}}kg</td>
+      <td>{{.Income}}</td>
+      <td>{{.Education}}</td>
+      <td>{{.Occupation}}</td>
+      <td>{{.Hokou}}</td>
+      <td>{{.Xinzuo}}</td>
+      <td>{{.House}}</td>
+      <td>{{.Car}}</td>
+      {{end}}
+    </tr>
+    {{else}} 
+    <div>没有找到相关用户</div>
+    {{end}}
+  </tbody>
+</table>
+
+<div align="middle">
+  {{if ge .PrevFrom 0}}
+    <a href="search?q={{.Query}}&from={{.PrevFrom}}">上一页</a>
+  {{end}}
+  <a href="search?q={{.Query}}&from={{.NextFrom}}">下一页</a>
+</div>
+
+</body>
+</html>
